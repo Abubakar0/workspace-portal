@@ -8,6 +8,9 @@ export interface UserRecord {
   email: string;
   role: Role;
   team: string;
+  marketplace: string;
+  status: 'active' | 'inactive';
+  shift: string;
   passwordHash: string;
 }
 
@@ -18,6 +21,25 @@ export interface VpsRecord {
   assignedEmployee: string;
   status: 'online' | 'offline';
   connectionId: string;
+  marketplace: string;
+  region: string;
+}
+
+export interface TeamRecord {
+  id: number;
+  name: string;
+  marketplace: string;
+  lead: string;
+  assigned: number;
+  members: number;
+}
+
+export interface AuditLogRecord {
+  id: number;
+  actor: string;
+  action: string;
+  entity: string;
+  createdAt: string;
 }
 
 export const users: UserRecord[] = [
@@ -27,6 +49,9 @@ export const users: UserRecord[] = [
     email: 'admin@trendwave.com',
     role: 'admin',
     team: 'Operations',
+    marketplace: 'All',
+    status: 'active',
+    shift: 'Day',
     passwordHash: bcrypt.hashSync('password123', 10)
   },
   {
@@ -35,6 +60,9 @@ export const users: UserRecord[] = [
     email: 'ali@trendwave.com',
     role: 'employee',
     team: 'Amazon',
+    marketplace: 'Amazon',
+    status: 'active',
+    shift: 'Evening',
     passwordHash: bcrypt.hashSync('password123', 10)
   },
   {
@@ -43,6 +71,9 @@ export const users: UserRecord[] = [
     email: 'usman@trendwave.com',
     role: 'employee',
     team: 'eBay',
+    marketplace: 'eBay',
+    status: 'active',
+    shift: 'Night',
     passwordHash: bcrypt.hashSync('password123', 10)
   }
 ];
@@ -54,7 +85,9 @@ export const vpsRecords: VpsRecord[] = [
     team: 'Amazon',
     assignedEmployee: 'Ali Khan',
     status: 'online',
-    connectionId: 'a-2193'
+    connectionId: 'a-2193',
+    marketplace: 'Amazon',
+    region: 'US'
   },
   {
     id: 2,
@@ -62,7 +95,9 @@ export const vpsRecords: VpsRecord[] = [
     team: 'eBay',
     assignedEmployee: 'Usman',
     status: 'offline',
-    connectionId: 'e-9291'
+    connectionId: 'e-9291',
+    marketplace: 'eBay',
+    region: 'UK'
   },
   {
     id: 3,
@@ -70,12 +105,24 @@ export const vpsRecords: VpsRecord[] = [
     team: 'Development',
     assignedEmployee: 'Admin User',
     status: 'online',
-    connectionId: 'd-4420'
+    connectionId: 'd-4420',
+    marketplace: 'Internal',
+    region: 'US'
   }
 ];
 
-export const teams = [
-  { name: 'Amazon', assigned: 12, members: 8 },
-  { name: 'eBay', assigned: 8, members: 5 },
-  { name: 'Development', assigned: 5, members: 4 }
+export const teams: TeamRecord[] = [
+  { id: 1, name: 'Amazon', marketplace: 'Amazon', lead: 'Ali Khan', assigned: 12, members: 8 },
+  { id: 2, name: 'eBay', marketplace: 'eBay', lead: 'Usman', assigned: 8, members: 5 },
+  { id: 3, name: 'Development', marketplace: 'Internal', lead: 'Admin User', assigned: 5, members: 4 }
+];
+
+export const auditLogs: AuditLogRecord[] = [
+  {
+    id: 1,
+    actor: 'Admin User',
+    action: 'Seeded portal data',
+    entity: 'System',
+    createdAt: new Date().toISOString()
+  }
 ];

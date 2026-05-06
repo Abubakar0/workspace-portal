@@ -1,0 +1,127 @@
+<header class="page-header">
+  <div>
+    <p>Admin operations</p>
+    <h1>Workspace Management</h1>
+  </div>
+</header>
+
+<div class="tabs">
+  <button type="button" [class.active]="activeTab === 'employees'" (click)="setTab('employees')">Employees</button>
+  <button type="button" [class.active]="activeTab === 'vps'" (click)="setTab('vps')">VPS</button>
+  <button type="button" [class.active]="activeTab === 'teams'" (click)="setTab('teams')">Teams</button>
+  <button type="button" [class.active]="activeTab === 'audit'" (click)="setTab('audit')">Audit</button>
+</div>
+
+<p class="message" *ngIf="message">{{ message }}</p>
+
+<section class="admin-grid" *ngIf="activeTab === 'employees'">
+  <form class="panel" (ngSubmit)="saveEmployee()">
+    <h2>{{ employeeForm.id ? 'Edit Employee' : 'Add Employee' }}</h2>
+    <input name="name" placeholder="Full name" [(ngModel)]="employeeForm.name" required />
+    <input name="email" type="email" placeholder="Email" [(ngModel)]="employeeForm.email" required />
+    <input name="password" type="password" placeholder="Password" [(ngModel)]="employeeForm.password" [required]="!employeeForm.id" />
+    <select name="role" [(ngModel)]="employeeForm.role">
+      <option value="admin">Admin</option>
+      <option value="manager">Manager</option>
+      <option value="employee">Employee</option>
+    </select>
+    <input name="team" placeholder="Team" [(ngModel)]="employeeForm.team" required />
+    <input name="marketplace" placeholder="Marketplace" [(ngModel)]="employeeForm.marketplace" />
+    <select name="status" [(ngModel)]="employeeForm.status">
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+    <input name="shift" placeholder="Shift" [(ngModel)]="employeeForm.shift" />
+    <button type="submit">Save Employee</button>
+  </form>
+
+  <div class="panel table-panel">
+    <h2>Employees</h2>
+    <div class="row header">
+      <span>Name</span><span>Team</span><span>Role</span><span></span>
+    </div>
+    <div class="row" *ngFor="let employee of employees">
+      <span>{{ employee.name }}<small>{{ employee.email }}</small></span>
+      <span>{{ employee.team }}<small>{{ employee.marketplace }}</small></span>
+      <span>{{ employee.role }}</span>
+      <span class="actions">
+        <button type="button" (click)="editEmployee(employee)">Edit</button>
+        <button type="button" (click)="deleteEmployee(employee.id)">Delete</button>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid" *ngIf="activeTab === 'vps'">
+  <form class="panel" (ngSubmit)="saveVps()">
+    <h2>{{ vpsForm.id ? 'Edit VPS' : 'Add VPS' }}</h2>
+    <input name="vpsName" placeholder="VPS name" [(ngModel)]="vpsForm.name" required />
+    <input name="vpsTeam" placeholder="Team" [(ngModel)]="vpsForm.team" required />
+    <input name="assignedEmployee" placeholder="Assigned employee" [(ngModel)]="vpsForm.assignedEmployee" required />
+    <input name="connectionId" placeholder="Guacamole connection ID" [(ngModel)]="vpsForm.connectionId" required />
+    <input name="vpsMarketplace" placeholder="Marketplace" [(ngModel)]="vpsForm.marketplace" />
+    <input name="region" placeholder="Region" [(ngModel)]="vpsForm.region" />
+    <select name="vpsStatus" [(ngModel)]="vpsForm.status">
+      <option value="online">Online</option>
+      <option value="offline">Offline</option>
+    </select>
+    <button type="submit">Save VPS</button>
+  </form>
+
+  <div class="panel table-panel">
+    <h2>VPS Inventory</h2>
+    <div class="row header">
+      <span>Name</span><span>Assigned</span><span>Status</span><span></span>
+    </div>
+    <div class="row" *ngFor="let vps of vpsList">
+      <span>{{ vps.name }}<small>{{ vps.region }} · {{ vps.marketplace }}</small></span>
+      <span>{{ vps.assignedEmployee }}<small>{{ vps.team }}</small></span>
+      <span>{{ vps.status }}</span>
+      <span class="actions">
+        <button type="button" (click)="editVps(vps)">Edit</button>
+        <button type="button" (click)="deleteVps(vps.id)">Delete</button>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid" *ngIf="activeTab === 'teams'">
+  <form class="panel" (ngSubmit)="saveTeam()">
+    <h2>{{ teamForm.id ? 'Edit Team' : 'Add Team' }}</h2>
+    <input name="teamName" placeholder="Team name" [(ngModel)]="teamForm.name" required />
+    <input name="teamMarketplace" placeholder="Marketplace" [(ngModel)]="teamForm.marketplace" required />
+    <input name="lead" placeholder="Team lead" [(ngModel)]="teamForm.lead" required />
+    <input name="assigned" type="number" placeholder="Assigned VPS" [(ngModel)]="teamForm.assigned" />
+    <input name="members" type="number" placeholder="Members" [(ngModel)]="teamForm.members" />
+    <button type="submit">Save Team</button>
+  </form>
+
+  <div class="panel table-panel">
+    <h2>Teams</h2>
+    <div class="row header">
+      <span>Name</span><span>Lead</span><span>VPS</span><span></span>
+    </div>
+    <div class="row" *ngFor="let team of teams">
+      <span>{{ team.name }}<small>{{ team.marketplace }}</small></span>
+      <span>{{ team.lead }}<small>{{ team.members }} members</small></span>
+      <span>{{ team.assigned }}</span>
+      <span class="actions">
+        <button type="button" (click)="editTeam(team)">Edit</button>
+        <button type="button" (click)="deleteTeam(team.id)">Delete</button>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="panel table-panel full" *ngIf="activeTab === 'audit'">
+  <h2>Audit Log</h2>
+  <div class="row header">
+    <span>Actor</span><span>Action</span><span>Entity</span><span>Time</span>
+  </div>
+  <div class="row" *ngFor="let log of auditLogs">
+    <span>{{ log.actor }}</span>
+    <span>{{ log.action }}</span>
+    <span>{{ log.entity }}</span>
+    <span>{{ log.createdAt | date: 'short' }}</span>
+  </div>
+</section>

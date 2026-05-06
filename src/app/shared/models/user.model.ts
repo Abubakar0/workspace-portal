@@ -4,6 +4,9 @@ export interface User {
   email: string;
   role: 'admin' | 'manager' | 'employee';
   team: string;
+  marketplace: string;
+  status: 'active' | 'inactive';
+  shift: string;
 }
 
 export interface LoginResponse {

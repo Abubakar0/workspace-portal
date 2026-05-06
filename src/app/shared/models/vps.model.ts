@@ -5,4 +5,6 @@ export interface Vps {
   assignedEmployee: string;
   status: 'online' | 'offline';
   connectionId: string;
+  marketplace: string;
+  region: string;
 }

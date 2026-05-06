@@ -3,4 +3,6 @@ export interface DashboardStats {
   totalVps: number;
   onlineEmployees: number;
   sessionsToday: number;
+  teams: number;
+  marketplaces: number;
 }

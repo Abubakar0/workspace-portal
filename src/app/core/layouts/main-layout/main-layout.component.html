@@ -9,8 +9,14 @@
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/vps" routerLinkActive="active">VPS Access</a>
       <a routerLink="/teams" routerLinkActive="active">Teams</a>
+      <a *ngIf="currentUser()?.role === 'admin'" routerLink="/admin" routerLinkActive="active">Admin</a>
       <a routerLink="/settings" routerLinkActive="active">Settings</a>
     </nav>
+
+    <div class="user-card" *ngIf="currentUser() as user">
+      <strong>{{ user.name }}</strong>
+      <span>{{ user.role }} · {{ user.team }}</span>
+    </div>
 
     <button class="logout" type="button" (click)="logout()">Logout</button>
   </aside>

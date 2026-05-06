@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -11,7 +11,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent {
-  constructor(private auth: AuthService) {}
+  private auth = inject(AuthService);
+  currentUser = this.auth.currentUser;
 
   logout(): void {
     this.auth.logout();
