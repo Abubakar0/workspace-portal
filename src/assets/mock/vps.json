@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Amazon-US-01",
+    "team": "Amazon",
+    "assignedEmployee": "Ali Khan",
+    "status": "online",
+    "connectionId": "a-2193"
+  },
+  {
+    "id": 2,
+    "name": "eBay-UK-04",
+    "team": "eBay",
+    "assignedEmployee": "Usman",
+    "status": "offline",
+    "connectionId": "e-9291"
+  }
+]

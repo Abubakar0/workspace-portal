@@ -1,0 +1,45 @@
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header p {
+  color: #a5b4fc;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+h1 {
+  color: white;
+  font-size: 34px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.stat-card {
+  min-height: 164px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.stat-card h3 {
+  color: #cbd5e1;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.stat-card h2 {
+  margin: 16px 0 10px;
+  font-size: 42px;
+}
+
+.stat-card p {
+  color: #94a3b8;
+}

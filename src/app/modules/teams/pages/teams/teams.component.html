@@ -1,0 +1,14 @@
+<header class="page-header">
+  <div>
+    <p>Workspace ownership</p>
+    <h1>Teams</h1>
+  </div>
+</header>
+
+<div class="teams-grid">
+  <div class="team-card" *ngFor="let team of teams">
+    <h2>{{ team.name }}</h2>
+    <p>{{ team.assigned }} VPS Assigned</p>
+    <span>{{ team.members }} employees</span>
+  </div>
+</div>

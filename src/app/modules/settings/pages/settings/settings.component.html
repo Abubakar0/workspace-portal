@@ -1,0 +1,33 @@
+<header class="page-header">
+  <div>
+    <p>Environment configuration</p>
+    <h1>Settings</h1>
+  </div>
+</header>
+
+<section class="settings-panel">
+  <div>
+    <span>Company</span>
+    <strong>{{ settings?.companyName ?? '-' }}</strong>
+  </div>
+
+  <div>
+    <span>API URL</span>
+    <strong>{{ settings?.apiUrl ?? '-' }}</strong>
+  </div>
+
+  <div>
+    <span>Guacamole Base URL</span>
+    <strong>{{ settings?.guacamoleBaseUrl ?? '-' }}</strong>
+  </div>
+
+  <div>
+    <span>Authentication</span>
+    <strong>{{ settings?.auth ?? '-' }}</strong>
+  </div>
+
+  <div>
+    <span>Storage</span>
+    <strong>{{ settings?.storage ?? '-' }}</strong>
+  </div>
+</section>

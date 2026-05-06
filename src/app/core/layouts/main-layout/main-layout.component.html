@@ -1,0 +1,21 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">TW</span>
+      <span>Trend Wave Workspace</span>
+    </div>
+
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/vps" routerLinkActive="active">VPS Access</a>
+      <a routerLink="/teams" routerLinkActive="active">Teams</a>
+      <a routerLink="/settings" routerLinkActive="active">Settings</a>
+    </nav>
+
+    <button class="logout" type="button" (click)="logout()">Logout</button>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

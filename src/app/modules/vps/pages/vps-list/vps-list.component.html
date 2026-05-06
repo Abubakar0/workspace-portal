@@ -1,0 +1,35 @@
+<header class="page-header">
+  <div>
+    <p>Secure access layer</p>
+    <h1>VPS Access</h1>
+  </div>
+</header>
+
+<div class="vps-grid">
+  <div class="vps-card" *ngFor="let vps of vpsList">
+    <div class="card-header">
+      <div>
+        <h2>{{ vps.name }}</h2>
+        <p>{{ vps.team }}</p>
+      </div>
+
+      <div class="status">
+        <span class="indicator" [class.online]="vps.status === 'online'"></span>
+        {{ vps.status }}
+      </div>
+    </div>
+
+    <dl>
+      <div>
+        <dt>Assigned</dt>
+        <dd>{{ vps.assignedEmployee }}</dd>
+      </div>
+      <div>
+        <dt>Connection</dt>
+        <dd>{{ vps.connectionId }}</dd>
+      </div>
+    </dl>
+
+    <button type="button" (click)="openWorkspace(vps)">Open Workspace</button>
+  </div>
+</div>
