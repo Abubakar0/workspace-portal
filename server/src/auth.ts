@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { users } from './data';
+import { prisma } from './db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'trend-wave-local-dev-secret';
 
@@ -24,7 +24,7 @@ export function signToken(user: { id: number; email: string; role: string }): st
   );
 }
 
-export function requireAuth(req: AuthRequest, res: Response, next: NextFunction): void {
+export async function requireAuth(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
   const authHeader = req.header('authorization');
   const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
 
@@ -35,7 +35,9 @@ export function requireAuth(req: AuthRequest, res: Response, next: NextFunction)
 
   try {
     const payload = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload;
-    const user = users.find((item) => item.id === Number(payload.sub));
+    const user = await prisma.user.findUnique({
+      where: { id: Number(payload.sub) }
+    });
 
     if (!user) {
       res.status(401).json({ message: 'User no longer exists' });
