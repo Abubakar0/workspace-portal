@@ -1,47 +1,72 @@
 .login-wrapper {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
+  gap: 48px;
   align-items: center;
-  padding: 24px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(79, 70, 229, 0.24), transparent 28%),
-    #0b1020;
+  padding: 48px;
+  background: #f5f7fb;
+}
+
+.login-intro {
+  max-width: 720px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 8px;
+  background: #0f766e;
+  color: #ffffff;
+  font-weight: 900;
+  margin-bottom: 26px;
 }
 
 .login-card {
-  width: min(100%, 400px);
-  padding: 36px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  padding: 34px;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  background: #ffffff;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
 }
 
 .eyebrow {
-  color: #a5b4fc;
+  color: #0f766e;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
 
 h1 {
-  color: white;
-  font-size: 32px;
-  line-height: 1.1;
+  max-width: 760px;
+  color: #0f172a;
+  font-size: 54px;
+  line-height: 1;
+}
+
+h2 {
+  color: #0f172a;
+  font-size: 30px;
 }
 
 .subtitle {
-  color: #94a3b8;
-  margin: 12px 0 28px;
+  max-width: 620px;
+  color: #64748b;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-top: 18px;
 }
 
 label {
   display: block;
-  color: #cbd5e1;
+  color: #334155;
   font-size: 14px;
-  margin-top: 16px;
+  font-weight: 800;
+  margin-top: 18px;
 }
 
 label span {
@@ -52,15 +77,16 @@ label span {
 input {
   width: 100%;
   padding: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  background: #141c35;
-  color: white;
+  background: #ffffff;
+  color: #111827;
   outline: none;
 }
 
 input:focus {
-  border-color: #818cf8;
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px #ccfbf1;
 }
 
 button {
@@ -69,9 +95,9 @@ button {
   padding: 14px;
   border: none;
   border-radius: 8px;
-  background: #4f46e5;
+  background: #0f766e;
   color: white;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 button:disabled {
@@ -81,6 +107,23 @@ button:disabled {
 
 .error {
   margin-top: 16px;
-  color: #fca5a5;
+  color: #b91c1c;
   font-size: 14px;
+}
+
+.hint {
+  color: #64748b;
+  font-size: 13px;
+  margin-top: 16px;
+}
+
+@media (max-width: 860px) {
+  .login-wrapper {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
 }

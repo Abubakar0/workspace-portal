@@ -9,7 +9,7 @@ import { Team } from '../../../../shared/models/team.model';
 import { User } from '../../../../shared/models/user.model';
 import { Vps } from '../../../../shared/models/vps.model';
 
-type AdminTab = 'employees' | 'vps' | 'teams' | 'audit';
+type AdminTab = 'overview' | 'employees' | 'vps' | 'teams' | 'audit';
 
 @Component({
   selector: 'app-admin-console',
@@ -19,12 +19,13 @@ type AdminTab = 'employees' | 'vps' | 'teams' | 'audit';
   styleUrls: ['./admin-console.component.scss']
 })
 export class AdminConsoleComponent implements OnInit {
-  activeTab: AdminTab = 'employees';
+  activeTab: AdminTab = 'overview';
   employees: User[] = [];
   vpsList: Vps[] = [];
   teams: Team[] = [];
   auditLogs: AuditLog[] = [];
   message = '';
+  search = '';
 
   employeeForm: Partial<User> & { password: string; id?: number } = this.emptyEmployee();
   vpsForm: Partial<Vps> & { id?: number } = this.emptyVps();
@@ -49,6 +50,67 @@ export class AdminConsoleComponent implements OnInit {
 
   setTab(tab: AdminTab): void {
     this.activeTab = tab;
+    this.message = '';
+  }
+
+  get activeEmployees(): number {
+    return this.employees.filter((employee) => employee.status === 'active').length;
+  }
+
+  get onlineVps(): number {
+    return this.vpsList.filter((vps) => vps.status === 'online').length;
+  }
+
+  get marketplaces(): number {
+    return new Set(this.teams.map((team) => team.marketplace)).size;
+  }
+
+  get filteredEmployees(): User[] {
+    const search = this.search.toLowerCase().trim();
+
+    if (!search) {
+      return this.employees;
+    }
+
+    return this.employees.filter((employee) =>
+      [employee.name, employee.email, employee.team, employee.marketplace, employee.role]
+        .join(' ')
+        .toLowerCase()
+        .includes(search)
+    );
+  }
+
+  get filteredVpsList(): Vps[] {
+    const search = this.search.toLowerCase().trim();
+
+    if (!search) {
+      return this.vpsList;
+    }
+
+    return this.vpsList.filter((vps) =>
+      [vps.name, vps.team, vps.assignedEmployee, vps.marketplace, vps.region, vps.connectionId]
+        .join(' ')
+        .toLowerCase()
+        .includes(search)
+    );
+  }
+
+  get filteredTeams(): Team[] {
+    const search = this.search.toLowerCase().trim();
+
+    if (!search) {
+      return this.teams;
+    }
+
+    return this.teams.filter((team) =>
+      [team.name, team.marketplace, team.lead].join(' ').toLowerCase().includes(search)
+    );
+  }
+
+  resetForms(): void {
+    this.employeeForm = this.emptyEmployee();
+    this.vpsForm = this.emptyVps();
+    this.teamForm = this.emptyTeam();
     this.message = '';
   }
 

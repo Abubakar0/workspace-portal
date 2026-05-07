@@ -1,17 +1,23 @@
 <div class="login-wrapper">
-  <form class="login-card" (ngSubmit)="submit()">
+  <section class="login-intro">
+    <span class="brand-mark">TW</span>
     <p class="eyebrow">Trend Wave Solutions</p>
-    <h1>Trend Wave Workspace</h1>
-    <p class="subtitle">Secure Employee Workspace Portal</p>
+    <h1>Workspace control for e-commerce operations.</h1>
+    <p class="subtitle">Admins manage people, marketplace teams, VPS inventory, and audit trails. Employees get clean access to assigned workspaces.</p>
+  </section>
+
+  <form class="login-card" (ngSubmit)="submit()">
+    <p class="eyebrow">Secure sign in</p>
+    <h2>Welcome back</h2>
 
     <label>
       <span>Email</span>
-      <input type="email" placeholder="employee@trendwave.com" name="email" [(ngModel)]="email" />
+      <input type="email" placeholder="admin@trendwave.com" name="email" [(ngModel)]="email" />
     </label>
 
     <label>
       <span>Password</span>
-      <input type="password" placeholder="Password" name="password" [(ngModel)]="password" />
+      <input type="password" placeholder="password123" name="password" [(ngModel)]="password" />
     </label>
 
     <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
@@ -19,5 +25,7 @@
     <button type="submit" [disabled]="loading">
       {{ loading ? 'Signing in...' : 'Login' }}
     </button>
+
+    <p class="hint">Demo admin: admin@trendwave.com / password123</p>
   </form>
 </div>

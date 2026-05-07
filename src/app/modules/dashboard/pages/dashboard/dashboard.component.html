@@ -1,26 +1,41 @@
 <header class="page-header">
   <div>
     <p>Operations overview</p>
-    <h1>Welcome Back</h1>
+    <h1>Workspace health</h1>
+    <span>Role-aware metrics based on your access scope.</span>
   </div>
 </header>
 
 <div class="stats-grid">
-  <div class="stat-card">
+  <div class="stat-card primary">
     <h3>Active VPS</h3>
     <h2>{{ stats?.activeVps ?? '-' }}</h2>
-    <p>{{ stats?.totalVps ?? '-' }} total machines tracked</p>
+    <p>{{ stats?.totalVps ?? '-' }} total machines in scope</p>
   </div>
 
   <div class="stat-card">
     <h3>Online Employees</h3>
     <h2>{{ stats?.onlineEmployees ?? '-' }}</h2>
-    <p>Live workspace users right now</p>
+    <p>Active employees in your operational scope</p>
   </div>
 
   <div class="stat-card">
     <h3>Sessions Today</h3>
     <h2>{{ stats?.sessionsToday ?? '-' }}</h2>
-    <p>Secure Guacamole launches tracked</p>
+    <p>Secure Guacamole workspace launches</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>Marketplaces</h3>
+    <h2>{{ stats?.marketplaces ?? '-' }}</h2>
+    <p>Marketplace operations currently tracked</p>
   </div>
 </div>
+
+<section class="work-panel">
+  <div>
+    <h2>Access Rules</h2>
+    <p>Admins manage the whole company. Managers view team operations. Employees see assigned workspace resources only.</p>
+  </div>
+  <a routerLink="/vps">Open workspaces</a>
+</section>

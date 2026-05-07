@@ -111,12 +111,26 @@ app.get('/api/auth/me', requireAuth, async (req: AuthRequest, res) => {
 });
 
 app.get('/api/dashboard', requireAuth, async (_req, res) => {
+  const req = _req as AuthRequest;
+  const user = await prisma.user.findUnique({ where: { id: req.user?.id } });
+  const vpsWhere =
+    user?.role === 'admin'
+      ? {}
+      : user?.role === 'manager'
+        ? { team: user.team }
+        : { assignedEmployee: user?.name };
+
   const [activeVps, totalVps, onlineEmployees, launchSessions, teams] = await Promise.all([
-    prisma.vps.count({ where: { status: 'online' } }),
-    prisma.vps.count(),
-    prisma.user.count({ where: { status: 'active' } }),
+    prisma.vps.count({ where: { ...vpsWhere, status: 'online' } }),
+    prisma.vps.count({ where: vpsWhere }),
+    prisma.user.count({
+      where: user?.role === 'admin' ? { status: 'active' } : { status: 'active', team: user?.team }
+    }),
     prisma.auditLog.count({ where: { action: { contains: 'Launched' } } }),
-    prisma.team.findMany({ select: { marketplace: true } })
+    prisma.team.findMany({
+      where: user?.role === 'admin' ? {} : { name: user?.team },
+      select: { marketplace: true }
+    })
   ]);
 
   res.json({
@@ -130,7 +144,16 @@ app.get('/api/dashboard', requireAuth, async (_req, res) => {
 });
 
 app.get('/api/vps', requireAuth, async (_req, res) => {
-  res.json(await prisma.vps.findMany({ orderBy: { id: 'asc' } }));
+  const req = _req as AuthRequest;
+  const user = await prisma.user.findUnique({ where: { id: req.user?.id } });
+  const where =
+    user?.role === 'admin'
+      ? {}
+      : user?.role === 'manager'
+        ? { team: user.team }
+        : { assignedEmployee: user?.name };
+
+  res.json(await prisma.vps.findMany({ where, orderBy: { id: 'asc' } }));
 });
 
 app.post('/api/vps/:id/launch', requireAuth, async (req: AuthRequest, res) => {
@@ -152,7 +175,11 @@ app.post('/api/vps/:id/launch', requireAuth, async (req: AuthRequest, res) => {
 });
 
 app.get('/api/teams', requireAuth, async (_req, res) => {
-  res.json(await prisma.team.findMany({ orderBy: { id: 'asc' } }));
+  const req = _req as AuthRequest;
+  const user = await prisma.user.findUnique({ where: { id: req.user?.id } });
+  const where = user?.role === 'admin' ? {} : { name: user?.team };
+
+  res.json(await prisma.team.findMany({ where, orderBy: { id: 'asc' } }));
 });
 
 app.get('/api/admin/employees', requireAuth, requireAdmin, async (_req, res) => {

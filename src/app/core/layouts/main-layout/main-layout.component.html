@@ -2,26 +2,40 @@
   <aside class="sidebar">
     <div class="brand">
       <span class="brand-mark">TW</span>
-      <span>Trend Wave Workspace</span>
+      <span>
+        Trend Wave
+        <small>Workspace Portal</small>
+      </span>
     </div>
 
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-      <a routerLink="/vps" routerLinkActive="active">VPS Access</a>
+      <a routerLink="/dashboard" routerLinkActive="active">Overview</a>
+      <a routerLink="/vps" routerLinkActive="active">Workspaces</a>
       <a routerLink="/teams" routerLinkActive="active">Teams</a>
-      <a *ngIf="currentUser()?.role === 'admin'" routerLink="/admin" routerLinkActive="active">Admin</a>
+      <a *ngIf="currentUser()?.role === 'admin'" routerLink="/admin" routerLinkActive="active">Admin Console</a>
       <a routerLink="/settings" routerLinkActive="active">Settings</a>
     </nav>
 
     <div class="user-card" *ngIf="currentUser() as user">
+      <span class="avatar">{{ user.name.charAt(0) }}</span>
       <strong>{{ user.name }}</strong>
-      <span>{{ user.role }} · {{ user.team }}</span>
+      <span>{{ user.role }} / {{ user.team }}</span>
     </div>
 
     <button class="logout" type="button" (click)="logout()">Logout</button>
   </aside>
 
   <main class="content">
-    <router-outlet></router-outlet>
+    <div class="topbar" *ngIf="currentUser() as user">
+      <div>
+        <span class="kicker">Signed in as {{ user.role }}</span>
+        <h1>{{ user.role === 'admin' ? 'Company operations' : 'My workspace' }}</h1>
+      </div>
+      <span class="scope-pill">{{ user.role === 'admin' ? 'Full access' : 'Limited access' }}</span>
+    </div>
+
+    <section class="content-shell">
+      <router-outlet></router-outlet>
+    </section>
   </main>
 </div>

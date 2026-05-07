@@ -1,7 +1,8 @@
 <header class="page-header">
   <div>
     <p>Secure access layer</p>
-    <h1>VPS Access</h1>
+    <h1>Workspace Access</h1>
+    <span>Open only the VPS resources allowed by your role and team scope.</span>
   </div>
 </header>
 
@@ -10,11 +11,11 @@
     <div class="card-header">
       <div>
         <h2>{{ vps.name }}</h2>
-        <p>{{ vps.team }}</p>
+        <p>{{ vps.marketplace }} / {{ vps.region }}</p>
       </div>
 
-      <div class="status">
-        <span class="indicator" [class.online]="vps.status === 'online'"></span>
+      <div class="status" [class.online]="vps.status === 'online'">
+        <span class="indicator"></span>
         {{ vps.status }}
       </div>
     </div>
@@ -23,6 +24,10 @@
       <div>
         <dt>Assigned</dt>
         <dd>{{ vps.assignedEmployee }}</dd>
+      </div>
+      <div>
+        <dt>Team</dt>
+        <dd>{{ vps.team }}</dd>
       </div>
       <div>
         <dt>Connection</dt>

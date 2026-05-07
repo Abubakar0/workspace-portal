@@ -2,13 +2,29 @@
   <div>
     <p>Workspace ownership</p>
     <h1>Teams</h1>
+    <span>Marketplace teams and their assigned VPS capacity.</span>
   </div>
 </header>
 
 <div class="teams-grid">
   <div class="team-card" *ngFor="let team of teams">
-    <h2>{{ team.name }}</h2>
-    <p>{{ team.assigned }} VPS Assigned</p>
-    <span>{{ team.members }} employees</span>
+    <div>
+      <h2>{{ team.name }}</h2>
+      <span>{{ team.marketplace }}</span>
+    </div>
+    <dl>
+      <div>
+        <dt>Lead</dt>
+        <dd>{{ team.lead }}</dd>
+      </div>
+      <div>
+        <dt>VPS</dt>
+        <dd>{{ team.assigned }}</dd>
+      </div>
+      <div>
+        <dt>Members</dt>
+        <dd>{{ team.members }}</dd>
+      </div>
+    </dl>
   </div>
 </div>
